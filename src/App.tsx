@@ -19,6 +19,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ManagerDashboard from "./pages/manager/ManagerDashboard";
 import ManagerVehicles from "./pages/manager/ManagerVehicles";
 import AddVehicle from "./pages/manager/AddVehicle";
+import VehicleDetails from "./pages/VehicleDetails";
 
 import ManagerRoute from "./components/ManagerRoute";
 import EditVehicle from "./pages/manager/EditVehicle";

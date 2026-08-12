@@ -12,7 +12,6 @@ const Navbar = () => {
   const { language, toggleLanguage, t } = useLanguage();
 
   const {
-    user,
     isAuthenticated,
     isManager,
     logout,

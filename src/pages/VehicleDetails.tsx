@@ -309,7 +309,7 @@ const VehicleDetails = () => {
                       ? "सीट"
                       : "Seating"
                   }
-                  value={vehicle.seating_capacity}
+                  value={vehicle.seating_capacity ?? "N/A"}
                   icon="👥"
                 />
 
@@ -423,7 +423,7 @@ const VehicleDetails = () => {
                     ? "सीट क्षमता"
                     : "Seating Capacity"
                 }
-                value={vehicle.seating_capacity}
+                value={vehicle.seating_capacity ?? "N/A"}
               />
 
               <SpecificationRow
@@ -450,7 +450,12 @@ const VehicleDetails = () => {
                   <SpecificationRow
                     key={key}
                     label={key}
-                    value={value}
+                    value={
+                        typeof value === "string" ||
+                        typeof value === "number"
+                            ? value
+                            : JSON.stringify(value)
+                        }
                   />
                 )
               )}
