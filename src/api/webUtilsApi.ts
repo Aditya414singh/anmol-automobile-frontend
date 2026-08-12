@@ -2,7 +2,6 @@ import api from "./axios";
 import type { Vehicle } from "../types/vehicle";
 import type { User } from "../types/auth";
 
-
 // ==========================================================
 // COMMON API RESPONSE
 // ==========================================================
@@ -12,7 +11,6 @@ interface ApiResponse<T> {
   message: string;
   data: T;
 }
-
 
 // ==========================================================
 // AUTH TYPES
@@ -36,7 +34,6 @@ interface RegisterPayload {
   password: string;
   confirm_password: string;
 }
-
 
 // ==========================================================
 // VEHICLE TYPES
@@ -76,7 +73,6 @@ export interface UpdateVehiclePayload {
   is_available?: boolean;
 }
 
-
 // ==========================================================
 // VEHICLE IMAGE TYPES
 // ==========================================================
@@ -89,13 +85,50 @@ export interface UploadVehicleImageResponse {
   created_at: string;
 }
 
+// ==========================================================
+// TESTIMONIAL TYPES
+// ==========================================================
+
+export interface Testimonial {
+  id: string;
+  customer_name: string;
+  customer_location: string;
+  review: string;
+  rating: number;
+  customer_image_url: string;
+  customer_image_public_id: string;
+  vehicle: string | null;
+  is_published: boolean;
+  is_featured: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SubmitTestimonialPayload {
+  customer_name: string;
+  customer_location?: string;
+  review: string;
+  rating: number;
+  vehicle?: string;
+  customer_image?: File | null;
+}
+
+export interface UpdateTestimonialPayload {
+  customer_name?: string;
+  customer_location?: string;
+  review?: string;
+  rating?: number;
+  vehicle?: string | null;
+  is_published?: boolean;
+  is_featured?: boolean;
+  customer_image?: File | null;
+}
 
 // ==========================================================
 // WEB UTILS API
 // ==========================================================
 
 export const webUtilsApi = {
-
   // ========================================================
   // AUTH
   // ========================================================
@@ -111,7 +144,6 @@ export const webUtilsApi = {
     return response.data;
   },
 
-
   login: async (
     payload: LoginPayload
   ) => {
@@ -124,7 +156,6 @@ export const webUtilsApi = {
     return response.data;
   },
 
-
   getMe: async (): Promise<User> => {
     const response =
       await api.get<ApiResponse<User>>(
@@ -133,7 +164,6 @@ export const webUtilsApi = {
 
     return response.data.data;
   },
-
 
   refreshToken: async (
     refresh: string
@@ -153,7 +183,6 @@ export const webUtilsApi = {
     return response.data;
   },
 
-
   logout: async () => {
     const response =
       await api.post<ApiResponse<null>>(
@@ -162,7 +191,6 @@ export const webUtilsApi = {
 
     return response.data;
   },
-
 
   // ========================================================
   // PUBLIC VEHICLES
@@ -183,7 +211,6 @@ export const webUtilsApi = {
       max_price?: number;
     }
   ): Promise<Vehicle[]> => {
-
     const response =
       await api.get<ApiResponse<Vehicle[]>>(
         "/vehicles/",
@@ -195,7 +222,6 @@ export const webUtilsApi = {
     return response.data.data;
   },
 
-
   /*
    * Returns details of an available vehicle.
    *
@@ -205,7 +231,6 @@ export const webUtilsApi = {
   getVehicleById: async (
     vehicleId: string
   ): Promise<Vehicle> => {
-
     const response =
       await api.get<ApiResponse<Vehicle>>(
         `/vehicles/${vehicleId}/`
@@ -213,7 +238,6 @@ export const webUtilsApi = {
 
     return response.data.data;
   },
-
 
   // ========================================================
   // MANAGER - VEHICLES
@@ -239,7 +263,6 @@ export const webUtilsApi = {
       is_available?: boolean;
     }
   ): Promise<Vehicle[]> => {
-
     const response =
       await api.get<ApiResponse<Vehicle[]>>(
         "/vehicles/manager/",
@@ -250,7 +273,6 @@ export const webUtilsApi = {
 
     return response.data.data;
   },
-
 
   /*
    * Returns details of ANY vehicle for manager.
@@ -264,7 +286,6 @@ export const webUtilsApi = {
   getManagerVehicleById: async (
     vehicleId: string
   ): Promise<Vehicle> => {
-
     const response =
       await api.get<ApiResponse<Vehicle>>(
         `/vehicles/manager/${vehicleId}/`
@@ -272,7 +293,6 @@ export const webUtilsApi = {
 
     return response.data.data;
   },
-
 
   // ========================================================
   // MANAGER - CREATE VEHICLE
@@ -285,7 +305,6 @@ export const webUtilsApi = {
   createVehicle: async (
     payload: CreateVehiclePayload
   ): Promise<Vehicle> => {
-
     const response =
       await api.post<ApiResponse<Vehicle>>(
         "/vehicles/create/",
@@ -294,7 +313,6 @@ export const webUtilsApi = {
 
     return response.data.data;
   },
-
 
   // ========================================================
   // MANAGER - UPDATE VEHICLE
@@ -308,7 +326,6 @@ export const webUtilsApi = {
     vehicleId: string,
     payload: UpdateVehiclePayload
   ): Promise<Vehicle> => {
-
     const response =
       await api.put<ApiResponse<Vehicle>>(
         `/vehicles/${vehicleId}/update/`,
@@ -317,7 +334,6 @@ export const webUtilsApi = {
 
     return response.data.data;
   },
-
 
   // ========================================================
   // MANAGER - DELETE VEHICLE
@@ -330,7 +346,6 @@ export const webUtilsApi = {
   deleteVehicle: async (
     vehicleId: string
   ) => {
-
     const response =
       await api.delete<ApiResponse<null>>(
         `/vehicles/${vehicleId}/delete/`
@@ -338,7 +353,6 @@ export const webUtilsApi = {
 
     return response.data;
   },
-
 
   // ========================================================
   // MANAGER - VEHICLE IMAGES
@@ -353,7 +367,6 @@ export const webUtilsApi = {
     image: File,
     isPrimary = false
   ): Promise<UploadVehicleImageResponse> => {
-
     const formData = new FormData();
 
     formData.append(
@@ -383,7 +396,6 @@ export const webUtilsApi = {
     return response.data.data;
   },
 
-
   /*
    * DELETE /api/v1/vehicles/<vehicle_id>/images/<image_id>/
    */
@@ -392,7 +404,6 @@ export const webUtilsApi = {
     vehicleId: string,
     imageId: string
   ) => {
-
     const response =
       await api.delete<ApiResponse<null>>(
         `/vehicles/${vehicleId}/images/${imageId}/`
@@ -401,4 +412,246 @@ export const webUtilsApi = {
     return response.data;
   },
 
+  // ========================================================
+  // PUBLIC - TESTIMONIALS
+  // ========================================================
+
+  /*
+   * Returns published testimonials.
+   *
+   * GET /api/v1/testimonials/
+   */
+
+  getTestimonials: async (): Promise<Testimonial[]> => {
+    const response =
+      await api.get<ApiResponse<Testimonial[]>>(
+        "/testimonials/"
+      );
+
+    return response.data.data;
+  },
+
+  /*
+   * Submit customer testimonial.
+   *
+   * Customer does NOT need to be logged in.
+   *
+   * Image is optional.
+   *
+   * POST /api/v1/testimonials/submit/
+   */
+
+  submitTestimonial: async (
+    payload: SubmitTestimonialPayload
+  ): Promise<Testimonial> => {
+    const formData = new FormData();
+
+    formData.append(
+      "customer_name",
+      payload.customer_name
+    );
+
+    formData.append(
+      "customer_location",
+      payload.customer_location ?? ""
+    );
+
+    formData.append(
+      "review",
+      payload.review
+    );
+
+    formData.append(
+      "rating",
+      String(payload.rating)
+    );
+
+    if (payload.vehicle) {
+      formData.append(
+        "vehicle",
+        payload.vehicle
+      );
+    }
+
+    if (payload.customer_image) {
+      formData.append(
+        "customer_image",
+        payload.customer_image
+      );
+    }
+
+    const response =
+      await api.post<ApiResponse<Testimonial>>(
+        "/testimonials/submit/",
+        formData,
+        {
+          headers: {
+            "Content-Type":
+              "multipart/form-data",
+          },
+        }
+      );
+
+    return response.data.data;
+  },
+
+  // ========================================================
+  // MANAGER - TESTIMONIALS
+  // ========================================================
+
+  /*
+   * Returns all testimonials.
+   *
+   * Includes:
+   * - Pending testimonials
+   * - Published testimonials
+   *
+   * GET /api/v1/testimonials/manager/
+   */
+
+  getManagerTestimonials:
+    async (): Promise<Testimonial[]> => {
+      const response =
+        await api.get<ApiResponse<Testimonial[]>>(
+          "/testimonials/manager/"
+        );
+
+      return response.data.data;
+    },
+
+  /*
+   * Approve testimonial.
+   *
+   * Optionally mark it as featured.
+   *
+   * PUT /api/v1/testimonials/<testimonial_id>/approve/
+   */
+
+  approveTestimonial: async (
+    testimonialId: string,
+    isFeatured = false
+  ): Promise<Testimonial> => {
+    const response =
+      await api.put<ApiResponse<Testimonial>>(
+        `/testimonials/${testimonialId}/approve/`,
+        {
+          is_featured: isFeatured,
+        }
+      );
+
+    return response.data.data;
+  },
+
+  /*
+   * Update testimonial.
+   *
+   * PUT /api/v1/testimonials/<testimonial_id>/update/
+   */
+
+  updateTestimonial: async (
+    testimonialId: string,
+    payload: UpdateTestimonialPayload
+  ): Promise<Testimonial> => {
+    const formData = new FormData();
+
+    if (
+      payload.customer_name !== undefined
+    ) {
+      formData.append(
+        "customer_name",
+        payload.customer_name
+      );
+    }
+
+    if (
+      payload.customer_location !== undefined
+    ) {
+      formData.append(
+        "customer_location",
+        payload.customer_location
+      );
+    }
+
+    if (
+      payload.review !== undefined
+    ) {
+      formData.append(
+        "review",
+        payload.review
+      );
+    }
+
+    if (
+      payload.rating !== undefined
+    ) {
+      formData.append(
+        "rating",
+        String(payload.rating)
+      );
+    }
+
+    if (
+      payload.vehicle !== undefined &&
+      payload.vehicle !== null
+    ) {
+      formData.append(
+        "vehicle",
+        payload.vehicle
+      );
+    }
+
+    if (
+      payload.is_published !== undefined
+    ) {
+      formData.append(
+        "is_published",
+        String(payload.is_published)
+      );
+    }
+
+    if (
+      payload.is_featured !== undefined
+    ) {
+      formData.append(
+        "is_featured",
+        String(payload.is_featured)
+      );
+    }
+
+    if (payload.customer_image) {
+      formData.append(
+        "customer_image",
+        payload.customer_image
+      );
+    }
+
+    const response =
+      await api.put<ApiResponse<Testimonial>>(
+        `/testimonials/${testimonialId}/update/`,
+        formData,
+        {
+          headers: {
+            "Content-Type":
+              "multipart/form-data",
+          },
+        }
+      );
+
+    return response.data.data;
+  },
+
+  /*
+   * DELETE /api/v1/testimonials/<testimonial_id>/delete/
+   */
+
+  deleteTestimonial: async (
+    testimonialId: string
+  ) => {
+    const response =
+      await api.delete<ApiResponse<null>>(
+        `/testimonials/${testimonialId}/delete/`
+      );
+
+    return response.data;
+  },
 };

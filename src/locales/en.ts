@@ -96,6 +96,77 @@ const en = {
     startingFrom: "Starting from",
   },
 
+  testimonials: {
+    badge: "Customer Feedback",
+
+    title: "What Our Customers Say",
+
+    description:
+      "Real experiences from our customers.",
+
+    featured: "Featured",
+
+    shareBadge: "Customer Feedback",
+
+    shareTitle: "Share Your Experience",
+
+    shareDescription:
+      "We would love to hear about your experience with Anmol Automobiles.",
+
+    name: "Your Name",
+
+    location: "Location",
+
+    vehicle: "Vehicle",
+
+    generalExperience:
+      "General dealership experience",
+
+    rating: "Rating",
+
+    review: "Your Review",
+
+    reviewPlaceholder:
+      "Tell us about your experience...",
+
+    photo: "Your Photo",
+
+    optional: "(optional)",
+
+    photoHelp:
+      "JPG, PNG or WEBP. Maximum 5 MB.",
+
+    submit: "Submit Review",
+
+    submitting: "Submitting...",
+
+    selected: "Selected",
+
+    loadingVehicles:
+      "Loading vehicles...",
+
+    success:
+      "Thank you for sharing your experience! Your review will be published after verification.",
+
+    nameRequired:
+      "Please enter your name.",
+
+    reviewRequired:
+      "Please enter your review.",
+
+    ratingRequired:
+      "Please select a rating between 1 and 5.",
+
+    invalidImage:
+      "Please select a valid image file.",
+
+    imageTooLarge:
+      "Image size must be less than 5 MB.",
+
+    submitError:
+      "Unable to submit your review. Please try again.",
+  },
+
   manager: {
     panel: "Manager Panel",
 
