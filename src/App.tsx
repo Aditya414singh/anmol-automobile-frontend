@@ -23,7 +23,7 @@ import VehicleDetails from "./pages/VehicleDetails";
 
 import ManagerRoute from "./components/ManagerRoute";
 import EditVehicle from "./pages/manager/EditVehicle";
-
+import ManagerTestimonials from "./pages/manager/ManagerTestimonials";
 function App() {
   return (
     <BrowserRouter>
@@ -90,6 +90,10 @@ function App() {
                 <Route
                   path="/manager/vehicles/:id/edit"
                   element={<EditVehicle />}
+                />
+                <Route
+                  path="/manager/testimonials"
+                  element={<ManagerTestimonials />}
                 />
 
               </Route>
