@@ -160,7 +160,7 @@ const FeaturedBanner = () => {
               MEDIA
           ================================================== */}
 
-          <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 z-0 flex items-center justify-center bg-black">
 
             {featured.content_type ===
             "VIDEO" ? (
@@ -172,7 +172,7 @@ const FeaturedBanner = () => {
                 loop
                 playsInline
                 preload="metadata"
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                className="h-full w-full object-contain transition duration-700 sm:group-hover:scale-105"
               />
 
             ) : (
@@ -180,7 +180,7 @@ const FeaturedBanner = () => {
               <img
                 src={featured.media_url}
                 alt={featured.title}
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                className="h-full w-full object-contain transition duration-700 sm:group-hover:scale-105"
               />
 
             )}
