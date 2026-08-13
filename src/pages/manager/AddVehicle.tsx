@@ -16,6 +16,7 @@ import {
 } from "../../api/webUtilsApi";
 
 import { useLanguage } from "../../context/LanguageContext";
+import { compressImage } from "../../utils/compressImage";
 
 interface SelectedImage {
   id: string;
@@ -288,24 +289,27 @@ const AddVehicle = () => {
   // ==========================================
 
   const uploadImages = async (
-    vehicleId: string
+  vehicleId: string
   ) => {
-    if (
-      selectedImages.length === 0
-    ) {
-      return;
-    }
+  if (selectedImages.length === 0) {
+    return;
+  }
 
-    for (
-      const image of selectedImages
-    ) {
-      await webUtilsApi.uploadVehicleImage(
-        vehicleId,
+  for (const image of selectedImages) {
+    const compressedImage =
+      await compressImage(
         image.file,
-        image.id === primaryImageId
+        1800,
+        0.85
       );
-    }
-  };
+
+    await webUtilsApi.uploadVehicleImage(
+      vehicleId,
+      compressedImage,
+      image.id === primaryImageId
+    );
+  }
+};
 
   // ==========================================
   // SUBMIT

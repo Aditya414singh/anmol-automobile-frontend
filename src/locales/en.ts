@@ -167,6 +167,130 @@ const en = {
       "Unable to submit your review. Please try again.",
   },
 
+  // ============================================================
+  // FEATURED CONTENT
+  // ============================================================
+
+  featured: {
+    badge: "Featured",
+
+    title: "What's Happening at Anmol",
+
+    description:
+      "Offers, celebrations, announcements and special moments from Anmol Automobiles.",
+
+    viewMore: "Learn More",
+
+    managerTitle: "Featured Content",
+
+    managerDescription:
+      "Manage offers, festivals, announcements and promotional content.",
+
+    add: "Add Featured",
+
+    edit: "Edit",
+
+    delete: "Delete",
+
+    publish: "Publish",
+
+    unpublish: "Unpublish",
+
+    image: "Image",
+
+    video: "Video",
+
+    titleLabel: "Title",
+
+    descriptionLabel: "Description",
+
+    mediaLabel: "Image or Video",
+
+    contentType: "Content Type",
+
+    startDate: "Start Date",
+
+    endDate: "End Date",
+
+    buttonText: "Button Text",
+
+    buttonUrl: "Button URL",
+
+    optional: "(optional)",
+
+    uploadHelp:
+      "JPG, PNG, WEBP or supported video format.",
+
+    save: "Create Featured",
+
+    update: "Update Featured",
+
+    cancel: "Cancel",
+
+    published: "Published",
+
+    draft: "Draft",
+
+    starts: "Starts",
+
+    ends: "Ends",
+
+    noContent:
+      "No featured content yet",
+
+    noContentDescription:
+      "Create your first offer, announcement or campaign.",
+
+    loading: "Loading...",
+
+    tryAgain: "Try Again",
+
+    deleteConfirm:
+      "Are you sure you want to delete this featured content?",
+
+    createSuccess:
+      "Featured content created successfully.",
+
+    updateSuccess:
+      "Featured content updated successfully.",
+
+    publishSuccess:
+      "Featured content published successfully.",
+
+    unpublishSuccess:
+      "Featured content unpublished successfully.",
+
+    deleteSuccess:
+      "Featured content deleted successfully.",
+
+    createError:
+      "Unable to create featured content. Please try again.",
+
+    updateError:
+      "Unable to update featured content. Please try again.",
+
+    invalidMedia:
+      "Please select a valid image or video file.",
+
+    mediaRequired:
+      "Please select an image or video.",
+
+    titleRequired:
+      "Please enter a title.",
+
+    startDateRequired:
+      "Please select a start date.",
+
+    endDateRequired:
+      "Please select an end date.",
+
+    endDateInvalid:
+      "End date must be after start date.",
+
+    buttonUrlHelp:
+      "Example: /vehicles or https://example.com",
+  },
+
   manager: {
     panel: "Manager Panel",
 
@@ -201,6 +325,15 @@ const en = {
           "View your manager account information.",
 
         action: "View Profile",
+      },
+
+      featured: {
+        title: "Featured Content",
+
+        description:
+          "Manage offers, festivals, announcements and promotional campaigns.",
+
+        action: "Manage Featured",
       },
     },
 

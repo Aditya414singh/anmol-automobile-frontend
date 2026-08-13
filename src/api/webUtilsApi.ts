@@ -124,6 +124,55 @@ export interface UpdateTestimonialPayload {
   customer_image?: File | null;
 }
 
+
+// ==========================================================
+// VEHICLE DELIVERY TYPES
+// ==========================================================
+
+export interface VehicleDelivery {
+  id: string;
+  vehicle: string | null;
+  vehicle_name: string | null;
+  vehicle_model: string | null;
+  customer_name: string;
+  customer_location: string;
+  delivery_date: string;
+  image_url: string;
+  public_id: string;
+  caption: string;
+  is_published: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateVehicleDeliveryPayload {
+  vehicle?: string | null;
+  customer_name?: string;
+  customer_location?: string;
+  delivery_date: string;
+  caption?: string;
+  image: File;
+}
+
+
+//FEATURED TYPES
+export interface FeaturedContent {
+  id: string;
+  title: string;
+  description: string;
+  content_type: "IMAGE" | "VIDEO";
+  media_url: string;
+  public_id: string;
+  button_text: string;
+  button_url: string;
+  start_date: string;
+  end_date: string;
+  is_published: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+
 // ==========================================================
 // WEB UTILS API
 // ==========================================================
@@ -654,4 +703,260 @@ export const webUtilsApi = {
 
     return response.data;
   },
+
+  // ========================================================
+  // PUBLIC - VEHICLE DELIVERIES
+  // ========================================================
+
+  /*
+   * Returns only published vehicle deliveries.
+   *
+   * GET /api/v1/vehicles/deliveries/
+   */
+
+getVehicleDeliveries: async (
+  limit?: number
+): Promise<VehicleDelivery[]> => {
+  const response =
+    await api.get<ApiResponse<VehicleDelivery[]>>(
+      "/vehicles/deliveries/",
+      {
+        params: limit
+          ? { limit }
+          : undefined,
+      }
+    );
+
+  return response.data.data;
+},
+
+
+  // ========================================================
+  // MANAGER - VEHICLE DELIVERIES
+  // ========================================================
+
+  /*
+   * Returns all vehicle deliveries.
+   *
+   * Includes:
+   * - Pending deliveries
+   * - Published deliveries
+   *
+   * GET /api/v1/vehicles/deliveries/manager/
+   */
+
+  getManagerVehicleDeliveries: async (): Promise<
+    VehicleDelivery[]
+  > => {
+    const response =
+      await api.get<ApiResponse<VehicleDelivery[]>>(
+        "/vehicles/deliveries/manager/"
+      );
+
+    return response.data.data;
+  },
+
+
+  // ========================================================
+  // MANAGER - CREATE VEHICLE DELIVERY
+  // ========================================================
+
+  /*
+   * Creates a vehicle delivery.
+   *
+   * Image is uploaded as multipart/form-data.
+   *
+   * New delivery is unpublished by default.
+   *
+   * POST /api/v1/vehicles/deliveries/create/
+   */
+
+  createVehicleDelivery: async (
+    payload: CreateVehicleDeliveryPayload
+  ): Promise<VehicleDelivery> => {
+    const formData = new FormData();
+
+    if (payload.vehicle) {
+      formData.append(
+        "vehicle",
+        payload.vehicle
+      );
+    }
+
+    formData.append(
+      "customer_name",
+      payload.customer_name ?? ""
+    );
+
+    formData.append(
+      "customer_location",
+      payload.customer_location ?? ""
+    );
+
+    formData.append(
+      "delivery_date",
+      payload.delivery_date
+    );
+
+    formData.append(
+      "caption",
+      payload.caption ?? ""
+    );
+
+    formData.append(
+      "image",
+      payload.image
+    );
+
+    const response =
+      await api.post<ApiResponse<VehicleDelivery>>(
+        "/vehicles/deliveries/create/",
+        formData,
+        {
+          headers: {
+            "Content-Type":
+              "multipart/form-data",
+          },
+        }
+      );
+
+    return response.data.data;
+  },
+
+
+  // ========================================================
+  // MANAGER - PUBLISH VEHICLE DELIVERY
+  // ========================================================
+
+  /*
+   * Publishes a pending vehicle delivery.
+   *
+   * PUT /api/v1/vehicles/deliveries/<delivery_id>/approve/
+   */
+
+  approveVehicleDelivery: async (
+    deliveryId: string
+  ): Promise<VehicleDelivery> => {
+    const response =
+      await api.put<ApiResponse<VehicleDelivery>>(
+        `/vehicles/deliveries/${deliveryId}/approve/`
+      );
+
+    return response.data.data;
+  },
+
+
+  // ========================================================
+  // MANAGER - DELETE VEHICLE DELIVERY
+  // ========================================================
+
+  /*
+   * Deletes a vehicle delivery.
+   *
+   * The backend also deletes the associated
+   * Cloudinary image.
+   *
+   * DELETE /api/v1/vehicles/deliveries/<delivery_id>/delete/
+   */
+
+  deleteVehicleDelivery: async (
+    deliveryId: string
+  ) => {
+    const response =
+      await api.delete<ApiResponse<null>>(
+        `/vehicles/deliveries/${deliveryId}/delete/`
+      );
+
+    return response.data;
+  },
+
+
+  // ==========================================================
+// FEATURED CONTENT
+// ==========================================================
+
+getFeaturedContent: async (): Promise<FeaturedContent[]> => {
+  const response =
+    await api.get<ApiResponse<FeaturedContent[]>>(
+      "/featured/"
+    );
+
+  return response.data.data;
+},
+
+getManagerFeaturedContent: async (): Promise<
+  FeaturedContent[]
+> => {
+  const response =
+    await api.get<ApiResponse<FeaturedContent[]>>(
+      "/featured/manager/"
+    );
+
+  return response.data.data;
+},
+
+createFeaturedContent: async (
+  formData: FormData
+): Promise<FeaturedContent> => {
+  const response =
+    await api.post<ApiResponse<FeaturedContent>>(
+      "/featured/create/",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+  return response.data.data;
+},
+
+updateFeaturedContent: async (
+  featuredId: string,
+  formData: FormData
+): Promise<FeaturedContent> => {
+  const response =
+    await api.put<ApiResponse<FeaturedContent>>(
+      `/featured/${featuredId}/update/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+  return response.data.data;
+},
+
+publishFeaturedContent: async (
+  featuredId: string
+): Promise<FeaturedContent> => {
+  const response =
+    await api.put<ApiResponse<FeaturedContent>>(
+      `/featured/${featuredId}/publish/`
+    );
+
+  return response.data.data;
+},
+
+unpublishFeaturedContent: async (
+  featuredId: string
+): Promise<FeaturedContent> => {
+  const response =
+    await api.put<ApiResponse<FeaturedContent>>(
+      `/featured/${featuredId}/unpublish/`
+    );
+
+  return response.data.data;
+},
+
+deleteFeaturedContent: async (
+  featuredId: string
+): Promise<void> => {
+  await api.delete(
+    `/featured/${featuredId}/delete/`
+  );
+},
 };

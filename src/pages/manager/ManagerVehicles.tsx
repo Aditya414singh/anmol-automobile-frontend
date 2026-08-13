@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { webUtilsApi } from "../../api/webUtilsApi";
 import type { Vehicle } from "../../types/vehicle";
 import { useLanguage } from "../../context/LanguageContext";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinary";
 
 const ManagerVehicles = () => {
   const { language } = useLanguage();
@@ -302,10 +303,9 @@ const ManagerVehicles = () => {
                         <div className="relative aspect-[4/3] overflow-hidden bg-[#F4F8F5] lg:aspect-auto lg:min-h-[210px]">
                           {imageUrl ? (
                             <img
-                              src={imageUrl}
-                              alt={
-                                vehicle.name
-                              }
+                              src={getOptimizedCloudinaryUrl(imageUrl, 400)}
+                              alt={vehicle.name}
+                              loading="lazy"
                               className="h-full w-full object-contain p-6"
                             />
                           ) : (

@@ -5,22 +5,20 @@ import FeaturedVehicles from "../components/FeaturedVehicles";
 import Testimonials from "../components/Testimonials";
 import TestimonialForm from "../components/TestimonialForm";
 import EnquirySection from "../components/EnquirySection";
+import VehicleDeliveryGallery from "../components/VehicleDeliveryGallery";
+import FeaturedBanner from "../components/FeaturedBanner";
 
 const Home = () => {
   return (
     <main>
       <Hero />
-
+      <FeaturedBanner />
       <WhyChooseUs />
-
       <AboutUs />
-
       <FeaturedVehicles />
-
       <Testimonials />
-
       <TestimonialForm />
-
+      <VehicleDeliveryGallery />
       <EnquirySection />
     </main>
   );

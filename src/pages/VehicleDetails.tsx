@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { webUtilsApi } from "../api/webUtilsApi";
 import type { Vehicle } from "../types/vehicle";
 import { useLanguage } from "../context/LanguageContext";
+import { getOptimizedCloudinaryUrl } from "../utils/cloudinary";
 
 const VehicleDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -173,9 +174,9 @@ const VehicleDetails = () => {
 
                 {activeImage ? (
                   <img
-                    src={activeImage}
-                    alt={vehicle.name}
-                    className="h-full w-full object-contain p-6 sm:p-10"
+                    src={getOptimizedCloudinaryUrl(activeImage,1200)}
+                      alt={vehicle.name}
+                      className="h-full w-full object-contain p-6 sm:p-10"
                   />
                 ) : (
                   <div className="flex h-full items-center justify-center">
@@ -224,9 +225,13 @@ const VehicleDetails = () => {
                       }`}
                     >
                       <img
-                        src={image.image_url}
-                        alt={`${vehicle.name} ${index + 1}`}
-                        className="h-full w-full object-contain"
+                        src={getOptimizedCloudinaryUrl(
+                            image.image_url,
+                            200
+                          )}
+                          alt={`${vehicle.name} ${index + 1}`}
+                          loading="lazy"
+                          className="h-full w-full object-contain"
                       />
                     </button>
                   ))}

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import type { Vehicle } from "../types/vehicle";
 import { useLanguage } from "../context/LanguageContext";
+import { getOptimizedCloudinaryUrl } from "../utils/cloudinary";
 
 
 interface VehicleCardProps {
@@ -21,6 +22,15 @@ const VehicleCard = ({
       (image) => image.is_primary
     )?.image_url ??
     vehicle.images?.[0]?.image_url;
+
+
+  const optimizedImageUrl =
+    imageUrl
+      ? getOptimizedCloudinaryUrl(
+          imageUrl,
+          800
+        )
+      : undefined;
 
 
   const formattedPrice =
@@ -57,9 +67,9 @@ const VehicleCard = ({
 
       <div className="relative aspect-[4/3] overflow-hidden bg-[#F4F8F5]">
 
-        {imageUrl ? (
+        {optimizedImageUrl ? (
           <img
-            src={imageUrl}
+            src={optimizedImageUrl}
             alt={vehicle.name}
             loading="lazy"
             className="h-full w-full object-contain p-5 transition duration-500 group-hover:scale-105 sm:p-7"
