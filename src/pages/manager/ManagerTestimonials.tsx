@@ -2,7 +2,7 @@ import {
   useEffect,
   useState,
 } from "react";
-
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinary";
 import type { Testimonial } from "../../api/webUtilsApi";
 
 import {
@@ -539,14 +539,14 @@ const TestimonialCard = ({
             {testimonial.customer_image_url ? (
 
               <img
-                src={
-                  testimonial.customer_image_url
-                }
-                alt={
-                  testimonial.customer_name
-                }
-                className="h-14 w-14 rounded-full object-cover"
-              />
+                  src={getOptimizedCloudinaryUrl(
+                    testimonial.customer_image_url,
+                    150
+                  )}
+                  alt={testimonial.customer_name}
+                  loading="lazy"
+                  className="h-14 w-14 rounded-full object-cover"
+                />
 
             ) : (
 

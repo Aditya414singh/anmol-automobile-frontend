@@ -10,7 +10,6 @@ import { useAuth } from "../../context/AuthContext";
 import { useLanguage } from "../../context/LanguageContext";
 
 import { webUtilsApi } from "../../api/webUtilsApi";
-
 import type { Vehicle } from "../../types/vehicle";
 
 
@@ -31,9 +30,9 @@ const ManagerDashboard = () => {
     useState("");
 
 
-  // ==========================================
+  // ==========================================================
   // FETCH VEHICLES
-  // ==========================================
+  // ==========================================================
 
   useEffect(() => {
     const loadDashboard = async () => {
@@ -67,9 +66,9 @@ const ManagerDashboard = () => {
   }, [isHindi]);
 
 
-  // ==========================================
+  // ==========================================================
   // DASHBOARD STATISTICS
-  // ==========================================
+  // ==========================================================
 
   const statistics = useMemo(() => {
     const total = vehicles.length;
@@ -106,9 +105,9 @@ const ManagerDashboard = () => {
   }, [vehicles]);
 
 
-  // ==========================================
+  // ==========================================================
   // RECENT VEHICLES
-  // ==========================================
+  // ==========================================================
 
   const recentVehicles =
     useMemo(() => {
@@ -126,9 +125,9 @@ const ManagerDashboard = () => {
     }, [vehicles]);
 
 
-  // ==========================================
+  // ==========================================================
   // FORMAT PRICE
-  // ==========================================
+  // ==========================================================
 
   const formatPrice = (
     price: number | string
@@ -146,15 +145,13 @@ const ManagerDashboard = () => {
   };
 
 
-  // ==========================================
+  // ==========================================================
   // LOADING STATE
-  // ==========================================
+  // ==========================================================
 
   if (loading) {
     return (
       <main className="min-h-screen bg-[#F8FAF9]">
-
-        {/* Header skeleton */}
 
         <section className="border-b border-gray-100 bg-[#F4F8F5]">
 
@@ -170,8 +167,6 @@ const ManagerDashboard = () => {
 
         </section>
 
-
-        {/* Cards skeleton */}
 
         <section className="py-10 sm:py-14">
 
@@ -201,16 +196,16 @@ const ManagerDashboard = () => {
   }
 
 
-  // ==========================================
+  // ==========================================================
   // PAGE
-  // ==========================================
+  // ==========================================================
 
   return (
     <main className="min-h-screen bg-[#F8FAF9]">
 
-      {/* ======================================
+      {/* ======================================================
           HEADER
-      ====================================== */}
+      ====================================================== */}
 
       <section className="border-b border-gray-100 bg-[#F4F8F5]">
 
@@ -234,9 +229,9 @@ const ManagerDashboard = () => {
       </section>
 
 
-      {/* ======================================
+      {/* ======================================================
           ERROR
-      ====================================== */}
+      ====================================================== */}
 
       {error && (
         <section className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
@@ -249,9 +244,9 @@ const ManagerDashboard = () => {
       )}
 
 
-      {/* ======================================
+      {/* ======================================================
           STATISTICS
-      ====================================== */}
+      ====================================================== */}
 
       <section className="py-8 sm:py-10">
 
@@ -364,7 +359,7 @@ const ManagerDashboard = () => {
             </div>
 
 
-            {/* MODELS */}
+            {/* VEHICLE TYPES */}
 
             <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
 
@@ -374,20 +369,18 @@ const ManagerDashboard = () => {
 
                   <p className="text-sm font-medium text-gray-500">
                     {isHindi
-                      ? "कुल मॉडल"
+                      ? "कुल प्रकार"
                       : "Vehicle Types"}
                   </p>
 
                   <p className="mt-3 text-3xl font-bold text-[#123C35]">
 
                     {[
-                      statistics.eRickshaws >
-                      0
+                      statistics.eRickshaws > 0
                         ? 1
                         : 0,
 
-                      statistics.cargoVehicles >
-                      0
+                      statistics.cargoVehicles > 0
                         ? 1
                         : 0,
 
@@ -422,15 +415,15 @@ const ManagerDashboard = () => {
       </section>
 
 
-      {/* ======================================
+      {/* ======================================================
           QUICK ACTIONS
-      ====================================== */}
+      ====================================================== */}
 
       <section className="pb-8 sm:pb-10">
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
 
             {/* ADD VEHICLE */}
 
@@ -545,6 +538,40 @@ const ManagerDashboard = () => {
 
             </Link>
 
+
+            {/* FEATURED CONTENT */}
+
+            <Link
+              to="/manager/featured"
+              className="group flex items-center justify-between rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-7"
+            >
+
+              <div className="flex items-center gap-4">
+
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#E6F3ED] text-2xl">
+                  📢
+                </div>
+
+                <div>
+
+                  <h2 className="text-lg font-bold text-[#123C35]">
+                    {t.manager.dashboard.featured.title}
+                  </h2>
+
+                  <p className="mt-1 text-sm text-gray-500">
+                    {t.manager.dashboard.featured.description}
+                  </p>
+
+                </div>
+
+              </div>
+
+              <span className="text-xl text-[#0F5C4D] transition group-hover:translate-x-1">
+                →
+              </span>
+
+            </Link>
+
           </div>
 
         </div>
@@ -552,9 +579,57 @@ const ManagerDashboard = () => {
       </section>
 
 
-      {/* ======================================
+      {/* ======================================================
+          DELIVERY GALLERY
+      ====================================================== */}
+
+      <section className="pb-8 sm:pb-10">
+
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+          <Link
+            to="/manager/deliveries"
+            className="group flex items-center justify-between rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-7"
+          >
+
+            <div className="flex items-center gap-4">
+
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#E6F3ED] text-2xl">
+                📸
+              </div>
+
+              <div>
+
+                <h2 className="text-lg font-bold text-[#123C35]">
+                  {isHindi
+                    ? "डिलीवरी गैलरी"
+                    : "Delivery Gallery"}
+                </h2>
+
+                <p className="mt-1 text-sm text-gray-500">
+                  {isHindi
+                    ? "बेचे गए ई-रिक्शा की ग्राहक डिलीवरी तस्वीरें प्रबंधित करें।"
+                    : "Manage customer delivery photos of sold e-rickshaws."}
+                </p>
+
+              </div>
+
+            </div>
+
+            <span className="text-xl text-[#0F5C4D] transition group-hover:translate-x-1">
+              →
+            </span>
+
+          </Link>
+
+        </div>
+
+      </section>
+
+
+      {/* ======================================================
           VEHICLE BREAKDOWN
-      ====================================== */}
+      ====================================================== */}
 
       <section className="pb-10 sm:pb-14">
 
@@ -661,9 +736,9 @@ const ManagerDashboard = () => {
       </section>
 
 
-      {/* ======================================
+      {/* ======================================================
           RECENT VEHICLES
-      ====================================== */}
+      ====================================================== */}
 
       <section className="pb-16 sm:pb-20">
 
@@ -706,357 +781,316 @@ const ManagerDashboard = () => {
 
             {/* EMPTY */}
 
-            {recentVehicles.length ===
-              0 && (
-                <div className="p-10 text-center sm:p-14">
+            {recentVehicles.length === 0 && (
+              <div className="p-10 text-center sm:p-14">
 
-                  <div className="text-5xl">
-                    🛺
-                  </div>
-
-                  <p className="mt-4 text-base font-semibold text-gray-600">
-                    {isHindi
-                      ? "अभी कोई वाहन नहीं है।"
-                      : "No vehicles available yet."}
-                  </p>
-
-                  <Link
-                    to="/manager/vehicles/add"
-                    className="mt-5 inline-flex rounded-full bg-[#0F5C4D] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#0B493D]"
-                  >
-                    {isHindi
-                      ? "पहला वाहन जोड़ें"
-                      : "Add First Vehicle"}
-                  </Link>
-
+                <div className="text-5xl">
+                  🛺
                 </div>
-              )}
+
+                <p className="mt-4 text-base font-semibold text-gray-600">
+                  {isHindi
+                    ? "अभी कोई वाहन नहीं है।"
+                    : "No vehicles available yet."}
+                </p>
+
+                <Link
+                  to="/manager/vehicles/add"
+                  className="mt-5 inline-flex rounded-full bg-[#0F5C4D] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#0B493D]"
+                >
+                  {isHindi
+                    ? "पहला वाहन जोड़ें"
+                    : "Add First Vehicle"}
+                </Link>
+
+              </div>
+            )}
 
 
             {/* DESKTOP TABLE */}
 
-            {recentVehicles.length >
-              0 && (
-                <div className="hidden overflow-x-auto md:block">
+            {recentVehicles.length > 0 && (
+              <div className="hidden overflow-x-auto md:block">
 
-                  <table className="w-full min-w-[700px]">
+                <table className="w-full min-w-[700px]">
 
-                    <thead>
+                  <thead>
 
-                      <tr className="border-b border-gray-100 bg-[#F8FAF9] text-left">
+                    <tr className="border-b border-gray-100 bg-[#F8FAF9] text-left">
 
-                        <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                          {isHindi
-                            ? "वाहन"
-                            : "Vehicle"}
-                        </th>
+                      <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                        {isHindi
+                          ? "वाहन"
+                          : "Vehicle"}
+                      </th>
 
-                        <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                          {isHindi
-                            ? "ब्रांड"
-                            : "Brand"}
-                        </th>
+                      <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                        {isHindi
+                          ? "ब्रांड"
+                          : "Brand"}
+                      </th>
 
-                        <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                          {isHindi
-                            ? "कीमत"
-                            : "Price"}
-                        </th>
+                      <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                        {isHindi
+                          ? "कीमत"
+                          : "Price"}
+                      </th>
 
-                        <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                          {isHindi
-                            ? "स्थिति"
-                            : "Status"}
-                        </th>
+                      <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                        {isHindi
+                          ? "स्थिति"
+                          : "Status"}
+                      </th>
 
-                        <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                          {isHindi
-                            ? "एक्शन"
-                            : "Action"}
-                        </th>
+                      <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                        {isHindi
+                          ? "एक्शन"
+                          : "Action"}
+                      </th>
 
-                      </tr>
+                    </tr>
 
-                    </thead>
-
-
-                    <tbody>
-
-                      {recentVehicles.map(
-                        (vehicle) => (
-
-                          <tr
-                            key={vehicle.id}
-                            className="border-b border-gray-50 last:border-0"
-                          >
-
-                            {/* VEHICLE */}
-
-                            <td className="px-6 py-5">
-
-                              <div className="flex items-center gap-4">
-
-                                <div className="flex h-14 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#F4F8F5]">
-
-                                  {vehicle.images
-                                    ?.length >
-                                    0 ? (
-
-                                    <img
-                                      src={
-                                        vehicle
-                                          .images
-                                          .find(
-                                            (
-                                              image
-                                            ) =>
-                                              image.is_primary
-                                          )
-                                          ?.image_url ??
-                                        vehicle
-                                          .images[0]
-                                          ?.image_url
-                                      }
-                                      alt={
-                                        vehicle.name
-                                      }
-                                      className="h-full w-full object-contain p-1"
-                                    />
-
-                                  ) : (
-
-                                    <span className="text-2xl">
-                                      🛺
-                                    </span>
-
-                                  )}
-
-                                </div>
+                  </thead>
 
 
-                                <div>
+                  <tbody>
 
-                                  <p className="font-semibold text-[#123C35]">
-                                    {
-                                      vehicle.name
+                    {recentVehicles.map(
+                      (vehicle) => (
+
+                        <tr
+                          key={vehicle.id}
+                          className="border-b border-gray-50 last:border-0"
+                        >
+
+                          {/* VEHICLE */}
+
+                          <td className="px-6 py-5">
+
+                            <div className="flex items-center gap-4">
+
+                              <div className="flex h-14 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#F4F8F5]">
+
+                                {vehicle.images?.length > 0 ? (
+
+                                  <img
+                                    src={
+                                      vehicle.images.find(
+                                        (image) =>
+                                          image.is_primary
+                                      )?.image_url ??
+                                      vehicle.images[0]?.image_url
                                     }
-                                  </p>
+                                    alt={vehicle.name}
+                                    className="h-full w-full object-contain p-1"
+                                  />
 
-                                  <p className="mt-1 text-xs text-gray-400">
-                                    {
-                                      vehicle.model
-                                    }
-                                  </p>
+                                ) : (
 
-                                </div>
+                                  <span className="text-2xl">
+                                    🛺
+                                  </span>
+
+                                )}
 
                               </div>
 
-                            </td>
 
+                              <div>
 
-                            {/* BRAND */}
-
-                            <td className="px-6 py-5 text-sm font-medium text-gray-600">
-                              {
-                                vehicle.brand
-                              }
-                            </td>
-
-
-                            {/* PRICE */}
-
-                            <td className="px-6 py-5 text-sm font-semibold text-[#0F5C4D]">
-                              {formatPrice(
-                                vehicle.price
-                              )}
-                            </td>
-
-
-                            {/* STATUS */}
-
-                            <td className="px-6 py-5">
-
-                              <span
-                                className={`inline-flex rounded-full px-3 py-1.5 text-xs font-semibold ${
-                                  vehicle.is_available
-                                    ? "bg-[#E6F3ED] text-[#0F5C4D]"
-                                    : "bg-gray-100 text-gray-500"
-                                }`}
-                              >
-
-                                {vehicle.is_available
-                                  ? isHindi
-                                    ? "उपलब्ध"
-                                    : "Available"
-                                  : isHindi
-                                  ? "अनुपलब्ध"
-                                  : "Unavailable"}
-
-                              </span>
-
-                            </td>
-
-
-                            {/* ACTION */}
-
-                            <td className="px-6 py-5">
-
-                              <Link
-                                to={`/manager/vehicles/${vehicle.id}/edit`}
-                                className="text-sm font-semibold text-[#0F5C4D] hover:underline"
-                              >
-                                {isHindi
-                                  ? "एडिट"
-                                  : "Edit"}
-                              </Link>
-
-                            </td>
-
-                          </tr>
-
-                        )
-                      )}
-
-                    </tbody>
-
-                  </table>
-
-                </div>
-              )}
-
-
-            {/* MOBILE LIST */}
-
-            {recentVehicles.length >
-              0 && (
-                <div className="divide-y divide-gray-100 md:hidden">
-
-                  {recentVehicles.map(
-                    (vehicle) => (
-
-                      <div
-                        key={vehicle.id}
-                        className="p-5"
-                      >
-
-                        <div className="flex gap-4">
-
-                          {/* IMAGE */}
-
-                          <div className="flex h-20 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-[#F4F8F5]">
-
-                            {vehicle.images
-                              ?.length >
-                              0 ? (
-
-                              <img
-                                src={
-                                  vehicle
-                                    .images
-                                    .find(
-                                      (
-                                        image
-                                      ) =>
-                                        image.is_primary
-                                    )
-                                    ?.image_url ??
-                                  vehicle
-                                    .images[0]
-                                    ?.image_url
-                                }
-                                alt={
-                                  vehicle.name
-                                }
-                                className="h-full w-full object-contain p-2"
-                              />
-
-                            ) : (
-
-                              <span className="text-3xl">
-                                🛺
-                              </span>
-
-                            )}
-
-                          </div>
-
-
-                          {/* DETAILS */}
-
-                          <div className="min-w-0 flex-1">
-
-                            <div className="flex items-start justify-between gap-3">
-
-                              <div className="min-w-0">
-
-                                <h3 className="truncate font-bold text-[#123C35]">
-                                  {
-                                    vehicle.name
-                                  }
-                                </h3>
+                                <p className="font-semibold text-[#123C35]">
+                                  {vehicle.name}
+                                </p>
 
                                 <p className="mt-1 text-xs text-gray-400">
-                                  {
-                                    vehicle.brand
-                                  }{" "}
-                                  •{" "}
-                                  {
-                                    vehicle.model
-                                  }
+                                  {vehicle.model}
                                 </p>
 
                               </div>
 
-
-                              <span
-                                className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold ${
-                                  vehicle.is_available
-                                    ? "bg-[#E6F3ED] text-[#0F5C4D]"
-                                    : "bg-gray-100 text-gray-500"
-                                }`}
-                              >
-
-                                {vehicle.is_available
-                                  ? isHindi
-                                    ? "उपलब्ध"
-                                    : "Available"
-                                  : isHindi
-                                  ? "अनुपलब्ध"
-                                  : "Unavailable"}
-
-                              </span>
-
                             </div>
 
+                          </td>
 
-                            <p className="mt-3 text-sm font-bold text-[#0F5C4D]">
-                              {formatPrice(
-                                vehicle.price
-                              )}
-                            </p>
 
-                          </div>
+                          {/* BRAND */}
+
+                          <td className="px-6 py-5 text-sm font-medium text-gray-600">
+                            {vehicle.brand}
+                          </td>
+
+
+                          {/* PRICE */}
+
+                          <td className="px-6 py-5 text-sm font-semibold text-[#0F5C4D]">
+                            {formatPrice(
+                              vehicle.price
+                            )}
+                          </td>
+
+
+                          {/* STATUS */}
+
+                          <td className="px-6 py-5">
+
+                            <span
+                              className={`inline-flex rounded-full px-3 py-1.5 text-xs font-semibold ${
+                                vehicle.is_available
+                                  ? "bg-[#E6F3ED] text-[#0F5C4D]"
+                                  : "bg-gray-100 text-gray-500"
+                              }`}
+                            >
+                              {vehicle.is_available
+                                ? isHindi
+                                  ? "उपलब्ध"
+                                  : "Available"
+                                : isHindi
+                                  ? "अनुपलब्ध"
+                                  : "Unavailable"}
+                            </span>
+
+                          </td>
+
+
+                          {/* ACTION */}
+
+                          <td className="px-6 py-5">
+
+                            <Link
+                              to={`/manager/vehicles/${vehicle.id}/edit`}
+                              className="text-sm font-semibold text-[#0F5C4D] hover:underline"
+                            >
+                              {isHindi
+                                ? "एडिट"
+                                : "Edit"}
+                            </Link>
+
+                          </td>
+
+                        </tr>
+
+                      )
+                    )}
+
+                  </tbody>
+
+                </table>
+
+              </div>
+            )}
+
+
+            {/* MOBILE LIST */}
+
+            {recentVehicles.length > 0 && (
+              <div className="divide-y divide-gray-100 md:hidden">
+
+                {recentVehicles.map(
+                  (vehicle) => (
+
+                    <div
+                      key={vehicle.id}
+                      className="p-5"
+                    >
+
+                      <div className="flex gap-4">
+
+                        {/* IMAGE */}
+
+                        <div className="flex h-20 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-[#F4F8F5]">
+
+                          {vehicle.images?.length > 0 ? (
+
+                            <img
+                              src={
+                                vehicle.images.find(
+                                  (image) =>
+                                    image.is_primary
+                                )?.image_url ??
+                                vehicle.images[0]?.image_url
+                              }
+                              alt={vehicle.name}
+                              className="h-full w-full object-contain p-2"
+                            />
+
+                          ) : (
+
+                            <span className="text-3xl">
+                              🛺
+                            </span>
+
+                          )}
 
                         </div>
 
 
-                        <Link
-                          to={`/manager/vehicles/${vehicle.id}/edit`}
-                          className="mt-4 block rounded-full border border-gray-200 py-2.5 text-center text-sm font-semibold text-[#0F5C4D] transition hover:bg-[#F4F8F5]"
-                        >
-                          {isHindi
-                            ? "वाहन एडिट करें"
-                            : "Edit Vehicle"}
-                        </Link>
+                        {/* DETAILS */}
+
+                        <div className="min-w-0 flex-1">
+
+                          <div className="flex items-start justify-between gap-3">
+
+                            <div className="min-w-0">
+
+                              <h3 className="truncate font-bold text-[#123C35]">
+                                {vehicle.name}
+                              </h3>
+
+                              <p className="mt-1 text-xs text-gray-400">
+                                {vehicle.brand}{" "}
+                                •{" "}
+                                {vehicle.model}
+                              </p>
+
+                            </div>
+
+
+                            <span
+                              className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold ${
+                                vehicle.is_available
+                                  ? "bg-[#E6F3ED] text-[#0F5C4D]"
+                                  : "bg-gray-100 text-gray-500"
+                              }`}
+                            >
+                              {vehicle.is_available
+                                ? isHindi
+                                  ? "उपलब्ध"
+                                  : "Available"
+                                : isHindi
+                                  ? "अनुपलब्ध"
+                                  : "Unavailable"}
+                            </span>
+
+                          </div>
+
+
+                          <p className="mt-3 text-sm font-bold text-[#0F5C4D]">
+                            {formatPrice(
+                              vehicle.price
+                            )}
+                          </p>
+
+                        </div>
 
                       </div>
 
-                    )
-                  )}
 
-                </div>
-              )}
+                      <Link
+                        to={`/manager/vehicles/${vehicle.id}/edit`}
+                        className="mt-4 block rounded-full border border-gray-200 py-2.5 text-center text-sm font-semibold text-[#0F5C4D] transition hover:bg-[#F4F8F5]"
+                      >
+                        {isHindi
+                          ? "वाहन एडिट करें"
+                          : "Edit Vehicle"}
+                      </Link>
+
+                    </div>
+
+                  )
+                )}
+
+              </div>
+            )}
 
           </div>
 

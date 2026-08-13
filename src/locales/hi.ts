@@ -167,6 +167,130 @@ const hi = {
       "आपकी समीक्षा भेजी नहीं जा सकी। कृपया पुनः प्रयास करें।",
   },
 
+  // ============================================================
+  // FEATURED CONTENT
+  // ============================================================
+
+  featured: {
+    badge: "विशेष",
+
+    title: "अनमोल में क्या खास है",
+
+    description:
+      "अनमोल ऑटोमोबाइल्स के ऑफर, त्योहार, घोषणाएं और खास पल।",
+
+    viewMore: "और जानें",
+
+    managerTitle: "Featured Content",
+
+    managerDescription:
+      "ऑफर, त्योहार, घोषणाएं और प्रचार सामग्री प्रबंधित करें।",
+
+    add: "Featured जोड़ें",
+
+    edit: "संपादित करें",
+
+    delete: "हटाएं",
+
+    publish: "प्रकाशित करें",
+
+    unpublish: "अप्रकाशित करें",
+
+    image: "इमेज",
+
+    video: "वीडियो",
+
+    titleLabel: "शीर्षक",
+
+    descriptionLabel: "विवरण",
+
+    mediaLabel: "इमेज या वीडियो",
+
+    contentType: "कंटेंट प्रकार",
+
+    startDate: "शुरुआत की तारीख",
+
+    endDate: "समाप्ति की तारीख",
+
+    buttonText: "बटन टेक्स्ट",
+
+    buttonUrl: "बटन URL",
+
+    optional: "(वैकल्पिक)",
+
+    uploadHelp:
+      "JPG, PNG, WEBP या समर्थित वीडियो फॉर्मेट।",
+
+    save: "Featured बनाएं",
+
+    update: "Featured अपडेट करें",
+
+    cancel: "रद्द करें",
+
+    published: "प्रकाशित",
+
+    draft: "ड्राफ्ट",
+
+    starts: "शुरू",
+
+    ends: "समाप्त",
+
+    noContent:
+      "अभी कोई Featured Content नहीं है",
+
+    noContentDescription:
+      "अपना पहला ऑफर, घोषणा या कैंपेन बनाएं।",
+
+    loading: "लोड हो रहा है...",
+
+    tryAgain: "फिर कोशिश करें",
+
+    deleteConfirm:
+      "क्या आप इस Featured Content को हटाना चाहते हैं?",
+
+    createSuccess:
+      "Featured Content सफलतापूर्वक बनाया गया।",
+
+    updateSuccess:
+      "Featured Content सफलतापूर्वक अपडेट किया गया।",
+
+    publishSuccess:
+      "Featured Content सफलतापूर्वक प्रकाशित किया गया।",
+
+    unpublishSuccess:
+      "Featured Content अप्रकाशित कर दिया गया।",
+
+    deleteSuccess:
+      "Featured Content सफलतापूर्वक हटा दिया गया।",
+
+    createError:
+      "Featured Content नहीं बनाया जा सका। कृपया पुनः प्रयास करें।",
+
+    updateError:
+      "Featured Content अपडेट नहीं किया जा सका। कृपया पुनः प्रयास करें।",
+
+    invalidMedia:
+      "कृपया सही इमेज या वीडियो फाइल चुनें।",
+
+    mediaRequired:
+      "कृपया इमेज या वीडियो चुनें।",
+
+    titleRequired:
+      "कृपया शीर्षक दर्ज करें।",
+
+    startDateRequired:
+      "कृपया शुरुआत की तारीख चुनें।",
+
+    endDateRequired:
+      "कृपया समाप्ति की तारीख चुनें।",
+
+    endDateInvalid:
+      "समाप्ति की तारीख शुरुआत की तारीख के बाद होनी चाहिए।",
+
+    buttonUrlHelp:
+      "उदाहरण: /vehicles या https://example.com",
+  },
+
   manager: {
     panel: "मैनेजर पैनल",
 
@@ -201,6 +325,15 @@ const hi = {
           "अपने मैनेजर अकाउंट की जानकारी देखें।",
 
         action: "प्रोफ़ाइल देखें",
+      },
+
+      featured: {
+        title: "Featured Content",
+
+        description:
+          "ऑफर, त्योहार, घोषणाएं और प्रचार कैंपेन प्रबंधित करें।",
+
+        action: "Featured प्रबंधित करें",
       },
     },
 

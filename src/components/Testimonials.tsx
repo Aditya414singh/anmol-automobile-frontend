@@ -15,6 +15,9 @@ import {
   useLanguage,
 } from "../context/LanguageContext";
 
+import {
+  getOptimizedCloudinaryUrl,
+} from "../utils/cloudinary";
 
 const MAX_TESTIMONIALS = 6;
 
@@ -261,13 +264,11 @@ const Testimonials = () => {
 
                     {testimonial.customer_image_url ? (
 
-                      <img
-                        src={
+                     <img
+                        src={getOptimizedCloudinaryUrl(
                           testimonial.customer_image_url
-                        }
-                        alt={
-                          testimonial.customer_name
-                        }
+                        )}
+                        alt={testimonial.customer_name}
                         loading="lazy"
                         className="h-12 w-12 shrink-0 rounded-full object-cover"
                       />

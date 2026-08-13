@@ -17,6 +17,7 @@ import type { UpdateVehiclePayload } from "../../api/webUtilsApi";
 import type { VehicleImage } from "../../types/vehicle";
 
 import { useLanguage } from "../../context/LanguageContext";
+import { compressImage } from "../../utils/compressImage";
 
 interface SpecificationItem {
   key: string;
@@ -351,65 +352,84 @@ const EditVehicle = () => {
   // UPLOAD IMAGE
   // ==========================================
 
-  const handleUploadImage = async () => {
-    if (!id) {
-      return;
-    }
+ const handleUploadImage = async () => {
+  if (!id) {
+    return;
+  }
 
-    if (!selectedImage) {
-      setImageError(
-        isHindi
-          ? "पहले एक इमेज चुनें।"
-          : "Please select an image first."
+  if (!selectedImage) {
+    setImageError(
+      isHindi
+        ? "पहले एक इमेज चुनें।"
+        : "Please select an image first."
+    );
+
+    return;
+  }
+
+  try {
+    setUploadingImage(true);
+    setImageError("");
+
+    // Compress image before uploading to Cloudinary
+    const compressedImage = await compressImage(
+      selectedImage,
+      1800,
+      0.85
+    );
+
+    console.log(
+      "Original image size:",
+      (selectedImage.size / 1024 / 1024).toFixed(2),
+      "MB"
+    );
+
+    console.log(
+      "Compressed image size:",
+      (compressedImage.size / 1024 / 1024).toFixed(2),
+      "MB"
+    );
+
+    const uploadedImage =
+      await webUtilsApi.uploadVehicleImage(
+        id,
+        compressedImage,
+        uploadAsPrimary
       );
 
-      return;
-    }
-
-    try {
-      setUploadingImage(true);
-      setImageError("");
-
-      const uploadedImage =
-        await webUtilsApi.uploadVehicleImage(
-          id,
-          selectedImage,
-          uploadAsPrimary
-        );
-
-      setImages((current) => {
-        if (uploadedImage.is_primary) {
-          return [
-            ...current.map((image) => ({
-              ...image,
-              is_primary: false,
-            })),
-            uploadedImage,
-          ];
-        }
-
+    setImages((current) => {
+      if (uploadedImage.is_primary) {
         return [
-          ...current,
+          ...current.map((image) => ({
+            ...image,
+            is_primary: false,
+          })),
           uploadedImage,
         ];
-      });
+      }
 
-      clearSelectedImage();
-    } catch (err) {
-      console.error(
-        "Failed to upload image:",
-        err
-      );
+      return [
+        ...current,
+        uploadedImage,
+      ];
+    });
 
-      setImageError(
-        isHindi
-          ? "इमेज अपलोड नहीं हो सकी। कृपया दोबारा कोशिश करें।"
-          : "Unable to upload image. Please try again."
-      );
-    } finally {
-      setUploadingImage(false);
-    }
-  };
+    clearSelectedImage();
+  } catch (err) {
+    console.error(
+      "Failed to upload image:",
+      err
+    );
+
+    setImageError(
+      isHindi
+        ? "इमेज अपलोड नहीं हो सकी। कृपया दोबारा कोशिश करें।"
+        : "Unable to upload image. Please try again."
+    );
+  } finally {
+    setUploadingImage(false);
+  }
+};
 
   // ==========================================
   // DELETE IMAGE
