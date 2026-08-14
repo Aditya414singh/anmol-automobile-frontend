@@ -30,10 +30,12 @@ import Deliveries from "./pages/Deliveries";
 import ManagerFeatured from "./pages/manager/ManagerFeatured";
 import AddFeatured from "./pages/manager/AddFeatured";
 import EditFeatured from "./pages/manager/EditFeatured";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <LanguageProvider>
         <AuthProvider>
 

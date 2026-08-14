@@ -19,17 +19,26 @@ import {
   getOptimizedCloudinaryUrl,
 } from "../utils/cloudinary";
 
+
 const MAX_TESTIMONIALS = 6;
 
 
 const Testimonials = () => {
-  const { t } = useLanguage();
 
-  const [testimonials, setTestimonials] =
-    useState<Testimonial[]>([]);
+  const { t, language } =
+    useLanguage();
 
-  const [loading, setLoading] =
-    useState(true);
+
+  const [
+    testimonials,
+    setTestimonials,
+  ] = useState<Testimonial[]>([]);
+
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
 
 
   // ==========================================================
@@ -37,83 +46,100 @@ const Testimonials = () => {
   // ==========================================================
 
   useEffect(() => {
-    const loadTestimonials = async () => {
-      try {
-        setLoading(true);
 
-        const data =
-          await webUtilsApi.getTestimonials();
+    const loadTestimonials =
+      async () => {
 
-        /*
-         * Public API should already return published
-         * testimonials, but we filter here as an
-         * additional safety layer.
-         */
+        try {
 
-        const publishedTestimonials =
-          data.filter(
-            (testimonial) =>
-              testimonial.is_published
-          );
+          setLoading(true);
 
 
-        /*
-         * Featured testimonials first.
-         *
-         * Inside each group, latest testimonials
-         * appear first.
-         */
+          const data =
+            await webUtilsApi.getTestimonials();
 
-        const sortedTestimonials =
-          [...publishedTestimonials].sort(
-            (a, b) => {
 
-              // Featured first
-              if (
-                a.is_featured !==
-                b.is_featured
-              ) {
-                return a.is_featured
-                  ? -1
-                  : 1;
+          /*
+           * Public API should already return published
+           * testimonials, but we filter here as an
+           * additional safety layer.
+           */
+
+          const publishedTestimonials =
+            data.filter(
+              (testimonial) =>
+                testimonial.is_published
+            );
+
+
+          /*
+           * Featured testimonials first.
+           *
+           * Inside each group, latest testimonials
+           * appear first.
+           */
+
+          const sortedTestimonials =
+            [
+              ...publishedTestimonials,
+            ].sort(
+              (a, b) => {
+
+                // Featured first
+
+                if (
+                  a.is_featured !==
+                  b.is_featured
+                ) {
+
+                  return a.is_featured
+                    ? -1
+                    : 1;
+
+                }
+
+
+                // Latest first
+
+                return (
+                  new Date(
+                    b.created_at
+                  ).getTime() -
+                  new Date(
+                    a.created_at
+                  ).getTime()
+                );
+
               }
+            );
 
 
-              // Latest first
-              return (
-                new Date(
-                  b.created_at
-                ).getTime() -
-                new Date(
-                  a.created_at
-                ).getTime()
-              );
-            }
+          /*
+           * Show maximum 6 testimonials
+           * on the homepage.
+           */
+
+          setTestimonials(
+            sortedTestimonials.slice(
+              0,
+              MAX_TESTIMONIALS
+            )
           );
 
+        } catch (error) {
 
-        /*
-         * Show maximum 6 testimonials
-         * on the homepage.
-         */
+          console.error(
+            "Failed to load testimonials:",
+            error
+          );
 
-        setTestimonials(
-          sortedTestimonials.slice(
-            0,
-            MAX_TESTIMONIALS
-          )
-        );
+        } finally {
 
-      } catch (error) {
-        console.error(
-          "Failed to load testimonials:",
-          error
-        );
+          setLoading(false);
 
-      } finally {
-        setLoading(false);
-      }
-    };
+        }
+
+      };
 
 
     loadTestimonials();
@@ -129,7 +155,9 @@ const Testimonials = () => {
     !loading &&
     testimonials.length === 0
   ) {
+
     return null;
+
   }
 
 
@@ -138,6 +166,7 @@ const Testimonials = () => {
   // ==========================================================
 
   return (
+
     <section className="bg-gray-50 px-4 py-16 sm:px-6 lg:px-8">
 
       <div className="mx-auto max-w-7xl">
@@ -150,17 +179,23 @@ const Testimonials = () => {
         <div className="mb-10 text-center">
 
           <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-gray-500">
+
             {t.testimonials.badge}
+
           </p>
 
 
           <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+
             {t.testimonials.title}
+
           </h2>
 
 
           <p className="mx-auto mt-3 max-w-xl text-gray-600">
+
             {t.testimonials.description}
+
           </p>
 
         </div>
@@ -172,15 +207,67 @@ const Testimonials = () => {
 
         {loading ? (
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div
+            className="
+              flex
+              gap-4
+              overflow-x-auto
+              pb-4
+              sm:grid
+              sm:grid-cols-2
+              sm:gap-6
+              sm:overflow-visible
+              sm:pb-0
+              lg:grid-cols-3
+            "
+          >
 
             {[1, 2, 3].map(
               (item) => (
 
                 <div
                   key={item}
-                  className="h-56 animate-pulse rounded-2xl bg-gray-200"
-                />
+                  className="
+                    min-w-[90%]
+                    shrink-0
+                    animate-pulse
+                    rounded-2xl
+                    bg-gray-200
+                    p-6
+
+                    sm:min-w-0
+                    sm:shrink
+                  "
+                >
+
+                  <div className="h-5 w-28 rounded bg-gray-300" />
+
+                  <div className="mt-5 space-y-3">
+
+                    <div className="h-4 w-full rounded bg-gray-300" />
+
+                    <div className="h-4 w-11/12 rounded bg-gray-300" />
+
+                    <div className="h-4 w-4/5 rounded bg-gray-300" />
+
+                  </div>
+
+
+                  <div className="mt-8 flex items-center gap-3">
+
+                    <div className="h-12 w-12 rounded-full bg-gray-300" />
+
+                    <div className="space-y-2">
+
+                      <div className="h-3 w-24 rounded bg-gray-300" />
+
+                      <div className="h-3 w-16 rounded bg-gray-300" />
+
+                    </div>
+
+                  </div>
+
+                </div>
 
               )
             )}
@@ -191,135 +278,221 @@ const Testimonials = () => {
 
           /* ==================================================
              TESTIMONIAL CARDS
-             ================================================== */
+          ================================================== */
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <>
 
-            {testimonials.map(
-              (testimonial) => (
+            <div
+              className="
+                flex
+                gap-4
+                overflow-x-auto
+                snap-x
+                snap-mandatory
+                pb-4
 
-                <article
-                  key={testimonial.id}
-                  className="relative flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
-                >
+                sm:grid
+                sm:grid-cols-2
+                sm:gap-6
+                sm:overflow-visible
+                sm:pb-0
 
-                  {/* ==================================================
-                      FEATURED BADGE
-                  ================================================== */}
+                lg:grid-cols-3
+              "
+            >
 
-                  {testimonial.is_featured && (
+              {testimonials.map(
+                (testimonial) => (
 
-                    <div className="absolute right-5 top-5 rounded-full bg-yellow-50 px-3 py-1 text-xs font-semibold text-yellow-700">
-                      ★{" "}
-                      {t.testimonials.featured}
-                    </div>
+                  <article
+                    key={testimonial.id}
+                    className="
+                      relative
+                      flex
+                      min-h-[280px]
+                      min-w-[90%]
+                      shrink-0
+                      snap-start
+                      flex-col
+                      rounded-2xl
+                      border
+                      border-gray-100
+                      bg-white
+                      p-6
+                      shadow-sm
+                      transition
+                      duration-300
+                      hover:-translate-y-1
+                      hover:shadow-md
 
-                  )}
-
-
-                  {/* ==================================================
-                      RATING
-                  ================================================== */}
-
-                  <div
-                    className="flex gap-1 text-lg"
-                    aria-label={`${testimonial.rating} ${t.testimonials.rating}`}
+                      sm:min-w-0
+                      sm:shrink
+                    "
                   >
 
-                    {[1, 2, 3, 4, 5].map(
-                      (star) => (
+                    {/* ======================================
+                        FEATURED BADGE
+                    ====================================== */}
 
-                        <span
-                          key={star}
-                          className={
-                            star <=
-                            testimonial.rating
-                              ? "text-yellow-400"
-                              : "text-gray-300"
-                          }
-                        >
-                          ★
-                        </span>
+                    {testimonial.is_featured && (
 
-                      )
-                    )}
+                      <div className="absolute right-5 top-5 rounded-full bg-yellow-50 px-3 py-1 text-xs font-semibold text-yellow-700">
 
-                  </div>
+                        ★{" "}
+                        {t.testimonials.featured}
 
-
-                  {/* ==================================================
-                      REVIEW
-                  ================================================== */}
-
-                  <p className="mt-4 flex-1 leading-7 text-gray-700">
-                    "{testimonial.review}"
-                  </p>
-
-
-                  {/* ==================================================
-                      CUSTOMER
-                  ================================================== */}
-
-                  <div className="mt-6 flex items-center gap-3">
-
-                    {testimonial.customer_image_url ? (
-
-                     <img
-                        src={getOptimizedCloudinaryUrl(
-                          testimonial.customer_image_url
-                        )}
-                        alt={testimonial.customer_name}
-                        loading="lazy"
-                        className="h-12 w-12 shrink-0 rounded-full object-cover"
-                      />
-
-                    ) : (
-
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gray-200 font-semibold text-gray-700">
-                        {testimonial.customer_name
-                          .charAt(0)
-                          .toUpperCase()}
                       </div>
 
                     )}
 
 
-                    <div className="min-w-0">
+                    {/* ======================================
+                        RATING
+                    ====================================== */}
 
-                      <p className="truncate font-semibold text-gray-900">
-                        {
-                          testimonial.customer_name
-                        }
-                      </p>
+                    <div
+                      className="flex gap-1 text-lg"
+                      aria-label={`${testimonial.rating} ${t.testimonials.rating}`}
+                    >
 
+                      {[1, 2, 3, 4, 5].map(
+                        (star) => (
 
-                      {testimonial.customer_location && (
+                          <span
+                            key={star}
+                            className={
+                              star <=
+                              testimonial.rating
+                                ? "text-yellow-400"
+                                : "text-gray-300"
+                            }
+                          >
 
-                        <p className="truncate text-sm text-gray-500">
-                          {
-                            testimonial.customer_location
-                          }
-                        </p>
+                            ★
 
+                          </span>
+
+                        )
                       )}
 
                     </div>
 
-                  </div>
 
-                </article>
+                    {/* ======================================
+                        REVIEW
+                    ====================================== */}
 
-              )
+                    <p className="mt-4 flex-1 leading-7 text-gray-700">
+
+                      "{testimonial.review}"
+
+                    </p>
+
+
+                    {/* ======================================
+                        CUSTOMER
+                    ====================================== */}
+
+                    <div className="mt-6 flex items-center gap-3">
+
+                      {testimonial.customer_image_url ? (
+
+                        <img
+                          src={getOptimizedCloudinaryUrl(
+                            testimonial.customer_image_url
+                          )}
+                          alt={
+                            testimonial.customer_name
+                          }
+                          loading="lazy"
+                          className="h-12 w-12 shrink-0 rounded-full object-cover"
+                        />
+
+                      ) : (
+
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gray-200 font-semibold text-gray-700">
+
+                          {testimonial.customer_name
+                            .charAt(0)
+                            .toUpperCase()}
+
+                        </div>
+
+                      )}
+
+
+                      <div className="min-w-0">
+
+                        <p className="truncate font-semibold text-gray-900">
+
+                          {
+                            testimonial.customer_name
+                          }
+
+                        </p>
+
+
+                        {testimonial.customer_location && (
+
+                          <p className="truncate text-sm text-gray-500">
+
+                            {
+                              testimonial.customer_location
+                            }
+
+                          </p>
+
+                        )}
+
+                      </div>
+
+                    </div>
+
+                  </article>
+
+                )
+              )}
+
+            </div>
+
+
+            {/* =================================================
+                MOBILE SWIPE HINT
+            ================================================= */}
+
+            {testimonials.length > 1 && (
+
+              <div className="mt-4 flex items-center justify-center gap-2 sm:hidden">
+
+                <span className="text-xs font-medium text-gray-400">
+
+                  {language === "hi"
+                    ? "और ग्राहक अनुभव देखने के लिए स्वाइप करें"
+                    : "Swipe to see more customer experiences"}
+
+                </span>
+
+
+                <span className="text-sm text-[#0F5C4D]">
+
+                  →
+
+                </span>
+
+              </div>
+
             )}
 
-          </div>
+          </>
 
         )}
 
       </div>
 
     </section>
+
   );
+
 };
 
 

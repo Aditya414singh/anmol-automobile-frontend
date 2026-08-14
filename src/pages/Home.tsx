@@ -12,13 +12,21 @@ const Home = () => {
   return (
     <main>
       <Hero />
+
       <FeaturedBanner />
-      <WhyChooseUs />
-      <AboutUs />
+
       <FeaturedVehicles />
+
+      <WhyChooseUs />
+
+      <AboutUs />
+
       <Testimonials />
-      <TestimonialForm />
+
       <VehicleDeliveryGallery />
+
+      <TestimonialForm />
+
       <EnquirySection />
     </main>
   );

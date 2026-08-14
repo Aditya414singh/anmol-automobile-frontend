@@ -41,7 +41,7 @@ const Hero = () => {
             </a>
 
             <a
-              href="#enquiry"
+              href="#contact"
               className="rounded-full border border-[#0F5C4D] bg-white px-7 py-3.5 text-center text-sm font-semibold text-[#0F5C4D] transition hover:bg-[#0F5C4D] hover:text-white"
             >
               {t.hero.quote}

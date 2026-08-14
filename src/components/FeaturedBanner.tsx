@@ -22,7 +22,8 @@ import {
 
 const FeaturedBanner = () => {
 
-  const { t } = useLanguage();
+  const { t } =
+    useLanguage();
 
 
   const [
@@ -56,8 +57,12 @@ const FeaturedBanner = () => {
 
         try {
 
+          setLoading(true);
+
+
           const data =
             await webUtilsApi.getFeaturedContent();
+
 
           setFeatured(
             data[0] ?? null
@@ -69,6 +74,7 @@ const FeaturedBanner = () => {
             "Failed to load featured content:",
             error
           );
+
 
           setFeatured(null);
 
@@ -118,10 +124,90 @@ const FeaturedBanner = () => {
 
 
   // ==========================================================
-  // LOADING / EMPTY
+  // LOADING
   // ==========================================================
 
-  if (loading || !featured) {
+  if (loading) {
+
+    return (
+
+      <section className="bg-[#F8FAF9] px-4 py-10 sm:px-6 lg:px-8">
+
+        <div className="mx-auto max-w-7xl">
+
+          <div className="relative min-h-[360px] overflow-hidden rounded-[2rem] bg-[#123C35] shadow-xl sm:min-h-[440px] lg:min-h-[500px]">
+
+            {/* Background skeleton */}
+
+            <div className="absolute inset-0 animate-pulse bg-[#1d5148]" />
+
+
+            {/* Subtle media placeholder */}
+
+            <div className="absolute inset-0 flex items-center justify-center">
+
+              <div className="h-32 w-32 rounded-full bg-white/5 sm:h-44 sm:w-44" />
+
+            </div>
+
+
+            {/* Content skeleton */}
+
+            <div className="relative flex min-h-[360px] items-end px-6 py-10 sm:min-h-[440px] sm:px-10 sm:py-14 lg:min-h-[500px] lg:px-16 lg:py-16">
+
+              <div className="w-full max-w-2xl">
+
+                {/* Badge */}
+
+                <div className="h-7 w-36 animate-pulse rounded-full bg-white/10" />
+
+
+                {/* Title */}
+
+                <div className="mt-5 space-y-3">
+
+                  <div className="h-9 w-4/5 animate-pulse rounded-lg bg-white/10 sm:h-12" />
+
+                  <div className="h-9 w-3/5 animate-pulse rounded-lg bg-white/10 sm:h-12" />
+
+                </div>
+
+
+                {/* Description */}
+
+                <div className="mt-5 space-y-2">
+
+                  <div className="h-4 w-full max-w-xl animate-pulse rounded bg-white/10" />
+
+                  <div className="h-4 w-5/6 max-w-lg animate-pulse rounded bg-white/10" />
+
+                </div>
+
+
+                {/* Button */}
+
+                <div className="mt-7 h-11 w-32 animate-pulse rounded-full bg-white/10" />
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    );
+
+  }
+
+
+  // ==========================================================
+  // EMPTY
+  // ==========================================================
+
+  if (!featured) {
     return null;
   }
 
@@ -265,8 +351,6 @@ const FeaturedBanner = () => {
 
             <div className="max-w-2xl">
 
-              {/* BADGE */}
-
               <div className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-md">
 
                 {t.featured.badge}
@@ -274,16 +358,12 @@ const FeaturedBanner = () => {
               </div>
 
 
-              {/* TITLE */}
-
               <h2 className="mt-5 text-3xl font-bold tracking-tight text-white drop-shadow-lg sm:text-4xl lg:text-5xl">
 
                 {featured.title}
 
               </h2>
 
-
-              {/* DESCRIPTION */}
 
               {featured.description && (
 
@@ -295,8 +375,6 @@ const FeaturedBanner = () => {
 
               )}
 
-
-              {/* BUTTON */}
 
               {featured.button_text &&
                 featured.button_url && (
@@ -375,6 +453,7 @@ const FeaturedBanner = () => {
     </section>
 
   );
+
 };
 
 

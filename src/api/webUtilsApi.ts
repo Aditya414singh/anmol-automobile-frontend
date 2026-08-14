@@ -172,6 +172,30 @@ export interface FeaturedContent {
   updated_at: string;
 }
 
+export interface EnquiryPayload {
+  customer_name: string;
+  phone: string;
+  vehicle: string;
+  message: string;
+}
+
+export interface EnquiryResponse {
+  success: boolean;
+  message: string;
+  data?: {
+    id: string;
+    customer_name: string;
+    phone: string;
+    vehicle: string;
+    message: string;
+    status: string;
+    manager_notes: string;
+    created_at: string;
+    updated_at: string;
+  };
+  notification_sent?: boolean;
+  code?: string;
+}
 
 // ==========================================================
 // WEB UTILS API
@@ -958,5 +982,16 @@ deleteFeaturedContent: async (
   await api.delete(
     `/featured/${featuredId}/delete/`
   );
+},
+
+submitEnquiry: async (
+  payload: EnquiryPayload
+): Promise<EnquiryResponse> => {
+  const response = await api.post(
+    "/enquiries/",
+    payload
+  );
+
+  return response.data;
 },
 };
