@@ -4,25 +4,49 @@ import {
   type MouseEvent,
 } from "react";
 
-import { Link } from "react-router-dom";
+import {
+  Link,
+} from "react-router-dom";
 
-import { webUtilsApi } from "../api/webUtilsApi";
-import type { VehicleDelivery } from "../api/webUtilsApi";
+import {
+  webUtilsApi,
+} from "../api/webUtilsApi";
 
-import { useLanguage } from "../context/LanguageContext";
-import { getOptimizedCloudinaryUrl } from "../utils/cloudinary";
+import type {
+  VehicleDelivery,
+} from "../api/webUtilsApi";
+
+import {
+  useLanguage,
+} from "../context/LanguageContext";
+
+import {
+  getOptimizedCloudinaryUrl,
+} from "../utils/cloudinary";
 
 
 const VehicleDeliveryGallery = () => {
-  const { language } = useLanguage();
 
-  const [deliveries, setDeliveries] = useState<
-    VehicleDelivery[]
-  >([]);
+  const { language } =
+    useLanguage();
 
-  const [loading, setLoading] = useState(true);
 
-  const isHindi = language === "hi";
+  const [
+    deliveries,
+    setDeliveries,
+  ] = useState<VehicleDelivery[]>(
+    []
+  );
+
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
+
+
+  const isHindi =
+    language === "hi";
 
 
   // ==========================================================
@@ -30,23 +54,40 @@ const VehicleDeliveryGallery = () => {
   // ==========================================================
 
   useEffect(() => {
-    const loadDeliveries = async () => {
-      try {
-        const data =
-          await webUtilsApi.getVehicleDeliveries(6);
 
-        setDeliveries(data);
-      } catch (error) {
-        console.error(
-          "Failed to load vehicle deliveries:",
-          error
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
+    const loadDeliveries =
+      async () => {
+
+        try {
+
+          setLoading(true);
+
+
+          const data =
+            await webUtilsApi
+              .getVehicleDeliveries(6);
+
+
+          setDeliveries(data);
+
+        } catch (error) {
+
+          console.error(
+            "Failed to load vehicle deliveries:",
+            error
+          );
+
+        } finally {
+
+          setLoading(false);
+
+        }
+
+      };
+
 
     loadDeliveries();
+
   }, []);
 
 
@@ -54,21 +95,28 @@ const VehicleDeliveryGallery = () => {
   // DATE
   // ==========================================================
 
-  const formatDate = (date: string) => {
+  const formatDate = (
+    date: string
+  ) => {
+
     if (!date) {
       return "";
     }
 
+
     return new Date(
       `${date}T00:00:00`
     ).toLocaleDateString(
-      isHindi ? "hi-IN" : "en-IN",
+      isHindi
+        ? "hi-IN"
+        : "en-IN",
       {
         day: "2-digit",
         month: "short",
         year: "numeric",
       }
     );
+
   };
 
 
@@ -79,27 +127,44 @@ const VehicleDeliveryGallery = () => {
   const handleMouseMove = (
     event: MouseEvent<HTMLElement>
   ) => {
-    const card = event.currentTarget;
 
-    const rect = card.getBoundingClientRect();
+    const card =
+      event.currentTarget;
+
+
+    const rect =
+      card.getBoundingClientRect();
+
 
     const x =
-      event.clientX - rect.left;
+      event.clientX -
+      rect.left;
+
 
     const y =
-      event.clientY - rect.top;
+      event.clientY -
+      rect.top;
+
 
     const centerX =
       rect.width / 2;
 
+
     const centerY =
       rect.height / 2;
 
+
     const rotateX =
-      ((y - centerY) / centerY) * -4;
+      ((y - centerY) /
+        centerY) *
+      -4;
+
 
     const rotateY =
-      ((x - centerX) / centerX) * 4;
+      ((x - centerX) /
+        centerX) *
+      4;
+
 
     card.style.transform = `
       perspective(1000px)
@@ -107,13 +172,17 @@ const VehicleDeliveryGallery = () => {
       rotateY(${rotateY}deg)
       translateY(-4px)
     `;
+
   };
 
 
   const handleMouseLeave = (
     event: MouseEvent<HTMLElement>
   ) => {
-    const card = event.currentTarget;
+
+    const card =
+      event.currentTarget;
+
 
     card.style.transform = `
       perspective(1000px)
@@ -121,6 +190,7 @@ const VehicleDeliveryGallery = () => {
       rotateY(0deg)
       translateY(0)
     `;
+
   };
 
 
@@ -132,199 +202,296 @@ const VehicleDeliveryGallery = () => {
     !loading &&
     deliveries.length === 0
   ) {
+
     return null;
+
   }
 
 
   return (
+
     <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
 
       <div className="mx-auto max-w-7xl">
 
 
-        {/* HEADER */}
+        {/* ==================================================
+            HEADER
+        ================================================== */}
 
         <div className="mx-auto max-w-2xl text-center">
 
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#0F8B6D]">
+
             {isHindi
               ? "हमारी डिलीवरी"
               : "Our Deliveries"}
+
           </p>
 
 
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#123C35] sm:text-4xl">
+
             {isHindi
               ? "हमारे ग्राहकों के साथ हमारी डिलीवरी"
               : "Deliveries We're Proud Of"}
+
           </h2>
 
 
           <p className="mt-4 text-base leading-7 text-gray-600">
+
             {isHindi
               ? "हमारे ग्राहकों को उनके नए ई-रिक्शा की डिलीवरी की कुछ यादगार तस्वीरें।"
               : "A look at some memorable deliveries of new e-rickshaws to our customers."}
+
           </p>
 
         </div>
 
 
-        {/* LOADING */}
+        {/* ==================================================
+            LOADING
+        ================================================== */}
 
         {loading && (
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-            {[1, 2, 3].map((item) => (
-              <div
-                key={item}
-                className="overflow-hidden rounded-3xl bg-gray-100"
-              >
-                <div className="aspect-[4/3] animate-pulse bg-gray-200" />
+          <div
+            className="
+              mt-10
+              grid
+              gap-6
+              sm:grid-cols-2
+              lg:grid-cols-3
+            "
+          >
 
-                <div className="space-y-3 p-5">
-                  <div className="h-5 w-2/3 animate-pulse rounded bg-gray-200" />
-                  <div className="h-4 w-1/2 animate-pulse rounded bg-gray-200" />
+            {[1, 2, 3].map(
+              (item) => (
+
+                <div
+                  key={item}
+                  className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm"
+                >
+
+                  {/* IMAGE SKELETON */}
+
+                  <div className="aspect-[4/3] animate-pulse bg-gray-200" />
+
+
+                  {/* CONTENT SKELETON */}
+
+                  <div className="space-y-4 p-5">
+
+                    <div className="flex items-center justify-between gap-4">
+
+                      <div className="space-y-2">
+
+                        <div className="h-4 w-32 animate-pulse rounded bg-gray-200" />
+
+                        <div className="h-3 w-24 animate-pulse rounded bg-gray-100" />
+
+                      </div>
+
+
+                      <div className="h-3 w-20 animate-pulse rounded bg-gray-100" />
+
+                    </div>
+
+
+                    <div className="rounded-2xl bg-gray-50 px-4 py-3">
+
+                      <div className="h-3 w-14 animate-pulse rounded bg-gray-200" />
+
+                      <div className="mt-2 h-4 w-36 animate-pulse rounded bg-gray-200" />
+
+                    </div>
+
+
+                    <div className="space-y-2">
+
+                      <div className="h-3 w-full animate-pulse rounded bg-gray-100" />
+
+                      <div className="h-3 w-4/5 animate-pulse rounded bg-gray-100" />
+
+                    </div>
+
+                  </div>
+
                 </div>
-              </div>
-            ))}
+
+              )
+            )}
 
           </div>
+
         )}
 
 
-        {/* DELIVERY CARDS */}
+        {/* ==================================================
+            DELIVERY CARDS
+        ================================================== */}
 
         {!loading &&
           deliveries.length > 0 && (
 
             <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
-              {deliveries.map((delivery) => (
+              {deliveries.map(
+                (delivery) => (
 
-                <article
-                  key={delivery.id}
-                  onMouseMove={handleMouseMove}
-                  onMouseLeave={handleMouseLeave}
-                  className="group overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-transform duration-150 ease-out hover:shadow-2xl"
-                  style={{
-                    transformStyle: "preserve-3d",
-                  }}
-                >
-
-                  {/* IMAGE */}
-
-                  <div className="relative aspect-[4/3] overflow-hidden bg-[#F4F8F5]">
-
-                    <img
-                      src={getOptimizedCloudinaryUrl(
-                        delivery.image_url,
-                        800
-                      )}
-                      alt={
-                        delivery.caption ||
-                        delivery.customer_name ||
-                        "Vehicle delivery"
-                      }
-                      loading="lazy"
-                      className="h-full w-full object-contain p-2 transition duration-500 ease-out group-hover:scale-[1.03]"
-                    />
-
-
-                    {/* DEPTH OVERLAY */}
-
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/5 via-transparent to-white/10 opacity-0 transition duration-300 group-hover:opacity-100" />
-
-                  </div>
-
-
-                  {/* CONTENT */}
-
-                  <div
-                    className="p-5"
+                  <article
+                    key={delivery.id}
+                    onMouseMove={
+                      handleMouseMove
+                    }
+                    onMouseLeave={
+                      handleMouseLeave
+                    }
+                    className="group overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-transform duration-150 ease-out hover:shadow-2xl"
                     style={{
-                      transform: "translateZ(20px)",
+                      transformStyle:
+                        "preserve-3d",
                     }}
                   >
 
-                    <div className="flex items-start justify-between gap-4">
+                    {/* IMAGE */}
 
-                      <div>
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[#F4F8F5]">
 
-                        <h3 className="font-bold text-[#123C35]">
-                          {delivery.customer_name ||
-                            (isHindi
-                              ? "हमारे ग्राहक"
-                              : "Our Customer")}
-                        </h3>
-
-
-                        {delivery.customer_location && (
-                          <p className="mt-1 text-sm text-gray-500">
-                            📍{" "}
-                            {delivery.customer_location}
-                          </p>
+                      <img
+                        src={getOptimizedCloudinaryUrl(
+                          delivery.image_url,
+                          800
                         )}
+                        alt={
+                          delivery.caption ||
+                          delivery.customer_name ||
+                          "Vehicle delivery"
+                        }
+                        loading="lazy"
+                        className="h-full w-full object-contain p-2 transition duration-500 ease-out group-hover:scale-[1.03]"
+                      />
 
-                      </div>
 
-
-                      <p className="shrink-0 text-xs font-medium text-gray-400">
-                        {formatDate(
-                          delivery.delivery_date
-                        )}
-                      </p>
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/5 via-transparent to-white/10 opacity-0 transition duration-300 group-hover:opacity-100" />
 
                     </div>
 
 
-                    {/* VEHICLE */}
+                    {/* CONTENT */}
 
-                    {(delivery.vehicle_name ||
-                      delivery.vehicle_model) && (
+                    <div
+                      className="p-5"
+                      style={{
+                        transform:
+                          "translateZ(20px)",
+                      }}
+                    >
 
-                      <div className="mt-4 rounded-2xl bg-[#F8FAF9] px-4 py-3">
+                      <div className="flex items-start justify-between gap-4">
 
-                        <p className="text-xs uppercase tracking-wider text-gray-400">
-                          {isHindi
-                            ? "वाहन"
-                            : "Vehicle"}
-                        </p>
+                        <div>
+
+                          <h3 className="font-bold text-[#123C35]">
+
+                            {delivery.customer_name ||
+                              (isHindi
+                                ? "हमारे ग्राहक"
+                                : "Our Customer")}
+
+                          </h3>
 
 
-                        <p className="mt-1 text-sm font-semibold text-[#123C35]">
+                          {delivery.customer_location && (
 
-                          {delivery.vehicle_name}
+                            <p className="mt-1 text-sm text-gray-500">
 
-                          {delivery.vehicle_model &&
-                            ` · ${delivery.vehicle_model}`}
+                              📍{" "}
+
+                              {
+                                delivery.customer_location
+                              }
+
+                            </p>
+
+                          )}
+
+                        </div>
+
+
+                        <p className="shrink-0 text-xs font-medium text-gray-400">
+
+                          {formatDate(
+                            delivery.delivery_date
+                          )}
 
                         </p>
 
                       </div>
 
-                    )}
+
+                      {/* VEHICLE */}
+
+                      {(delivery.vehicle_name ||
+                        delivery.vehicle_model) && (
+
+                        <div className="mt-4 rounded-2xl bg-[#F8FAF9] px-4 py-3">
+
+                          <p className="text-xs uppercase tracking-wider text-gray-400">
+
+                            {isHindi
+                              ? "वाहन"
+                              : "Vehicle"}
+
+                          </p>
 
 
-                    {/* CAPTION */}
+                          <p className="mt-1 text-sm font-semibold text-[#123C35]">
 
-                    {delivery.caption && (
-                      <p className="mt-4 text-sm leading-6 text-gray-600">
-                        {delivery.caption}
-                      </p>
-                    )}
+                            {
+                              delivery.vehicle_name
+                            }
 
-                  </div>
+                            {delivery.vehicle_model &&
+                              ` · ${delivery.vehicle_model}`}
 
-                </article>
+                          </p>
 
-              ))}
+                        </div>
+
+                      )}
+
+
+                      {/* CAPTION */}
+
+                      {delivery.caption && (
+
+                        <p className="mt-4 text-sm leading-6 text-gray-600">
+
+                          {
+                            delivery.caption
+                          }
+
+                        </p>
+
+                      )}
+
+                    </div>
+
+                  </article>
+
+                )
+              )}
 
             </div>
 
           )}
 
 
-        {/* VIEW ALL */}
+        {/* ==================================================
+            VIEW ALL
+        ================================================== */}
 
         {!loading &&
           deliveries.length > 0 && (
@@ -353,7 +520,9 @@ const VehicleDeliveryGallery = () => {
       </div>
 
     </section>
+
   );
+
 };
 
 
