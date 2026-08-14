@@ -348,7 +348,7 @@ const FeaturedVehicles = () => {
                 className="
                   mt-12
                   flex
-                  gap-3
+                  gap-2
                   overflow-x-auto
                   snap-x
                   snap-mandatory
@@ -364,31 +364,23 @@ const FeaturedVehicles = () => {
                   lg:grid-cols-4
                 "
               >
+                {vehicles.map((vehicle) => (
+                  <div
+                    key={vehicle.id}
+                    className="
+                      w-[82vw]
+                      max-w-[450px]
+                      shrink-0
+                      snap-start
 
-                {vehicles.map(
-                  (vehicle) => (
-
-                    <div
-                      key={vehicle.id}
-                      className="
-                        min-w-[92%]
-                        shrink-0
-                        snap-start
-
-                        sm:min-w-0
-                        sm:shrink
-                      "
-                    >
-
-                      <VehicleCard
-                        vehicle={vehicle}
-                      />
-
-                    </div>
-
-                  )
-                )}
-
+                      sm:w-auto
+                      sm:max-w-none
+                      sm:shrink
+                    "
+                  >
+                    <VehicleCard vehicle={vehicle} />
+                  </div>
+                ))}
               </div>
 
 
