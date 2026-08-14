@@ -58,7 +58,7 @@ const VehicleCard = ({
           handleCardClick();
         }
       }}
-      className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#0F8B6D] focus:ring-offset-2"
+      className="group flex min-w-0 w-full h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#0F8B6D] focus:ring-offset-2 sm:rounded-3xl"
     >
 
       {/* ==================================================
